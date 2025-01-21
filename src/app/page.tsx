@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { FormData } from "./types/form";
 import { LetterPreview } from "./components/letter-preview";
-import { Button } from "@/components/ui/button";
 import { TbWorldWww } from "react-icons/tb";
 import { CiServer } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { TfiLocationPin } from "react-icons/tfi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { RiResetRightLine } from "react-icons/ri";
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 export default function CoverLetterGenerator() {
   const [formData, setFormData] = useState<FormData>({
@@ -38,6 +39,8 @@ export default function CoverLetterGenerator() {
     address: false,
   });
 
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -49,22 +52,28 @@ export default function CoverLetterGenerator() {
     }));
   };
 
-  const validateFields = () => {
-    const newErrors = {
-      domainName: !formData.domainName,
-      primaryNameServer: !formData.primaryNameServer,
-      secondaryNameServer: !formData.secondaryNameServer,
-      name: !formData.name,
-      address: !formData.address,
-    };
-    setErrors(newErrors);
-    return !Object.values(newErrors).some(Boolean);
-  };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
-  const handlePrint = () => {
-    if (validateFields()) {
-      window.print();
+    let hasErrors = false;
+    Object.entries(formData).forEach(([field, value]) => {
+      if (!value.trim()) {
+        hasErrors = true;
+        setErrors((prev) => ({
+          ...prev,
+          [field]: true,
+        }));
+      }
+    });
+
+    if (hasErrors) {
+      console.log("Please fill out all required fields.");
+      return;
     }
+
+    setTimeout(() => {
+      setIsGenerating(true);
+    }, 1500);
   };
 
   const handleClear = () => {
@@ -84,15 +93,17 @@ export default function CoverLetterGenerator() {
       name: false,
       address: false,
     });
+    setIsGenerating(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 print:p-0 print:bg-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 print:block print:max-w-none">
+    <div className=" bg-gray-50 p-4 md:p-8 print:p-0 print:bg-white">
+      <div className="mx-4 grid md:grid-cols-3 gap-8 print:block print:max-w-none">
         <div className="space-y-6 print:hidden">
+          
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label  htmlFor="purpose">Purpose</Label>
+              <Label htmlFor="purpose">Purpose</Label>
               <Select
                 value={formData.purpose}
                 onValueChange={(value) => handleInputChange("purpose", value)}
@@ -109,7 +120,8 @@ export default function CoverLetterGenerator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="domainName">Domain Name
+              <Label htmlFor="domainName">
+                Domain Name
                 <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
@@ -136,7 +148,6 @@ export default function CoverLetterGenerator() {
                 <Input
                   id="companyName"
                   placeholder="E.g., abc Pvt. Ltd. or abc Govt. Corp."
-
                   value={formData.companyName}
                   onChange={(e) =>
                     handleInputChange("companyName", e.target.value)
@@ -148,8 +159,9 @@ export default function CoverLetterGenerator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="primaryNameServer">Primary Name Server
-              <span className="text-red-500">*</span>
+              <Label htmlFor="primaryNameServer">
+                Primary Name Server
+                <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -172,8 +184,9 @@ export default function CoverLetterGenerator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="secondaryNameServer">Secondary Name Server
-              <span className="text-red-500">*</span>
+              <Label htmlFor="secondaryNameServer">
+                Secondary Name Server
+                <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -196,8 +209,9 @@ export default function CoverLetterGenerator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Name
-              <span className="text-red-500">*</span>
+              <Label htmlFor="name">
+                Name
+                <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -216,8 +230,9 @@ export default function CoverLetterGenerator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address">Address
-              <span className="text-red-500">*</span>
+              <Label htmlFor="address">
+                Address
+                <span className="text-red-500">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -238,19 +253,20 @@ export default function CoverLetterGenerator() {
 
           <div className="flex justify-between">
             <Button
-              className="bg-white text-black h-14 w-20 hover:bg-blue-600 hover:text-white border-2 border-black"
-              onClick={handlePrint}
+              className="h-12 w-30 bg-blue-600 hover:bg-blue-800"
+              onClick={handleSubmit}
             >
-              Print
+              GenerateLetter
             </Button>
-            <Button className="h-14 w-20  hover:bg-blue-600 hover:text-white" variant="outline" onClick={handleClear}>
-              Clear
-            </Button>
+            <RiResetRightLine
+              onClick={handleClear}
+              className="h-12 w-20 md:w-12 p-2 rounded-md text-white bg-[#4CAF50] hover:bg-[#45a049] cursor-pointer"
+            />
           </div>
         </div>
 
-        <div className="print:w-full print:m-0 col-span-2  ">
-          <LetterPreview data={formData} />
+        <div className="w-full mt-6 mx-3 col-span-2">
+          <LetterPreview data={formData} isGenerating={isGenerating} />
         </div>
       </div>
     </div>
