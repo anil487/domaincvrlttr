@@ -13,10 +13,10 @@ const Print = ({ children }: { children: React.ReactNode }) => {
       <div className="flex justify-end mb-2">
         <Printer onClick={() => reactToPrintFn()} />
       </div>
-      <div ref={contentRef} className="p-5">
+      <div ref={contentRef}>
         {children}
       </div>
-      <div className="flex justify-center mb-2">
+      <div className="flex justify-center mt-4">
         <Button className="bg-green-500 hover:bg-green-800" onClick={() => reactToPrintFn()} >Download 
         <MdOutlineFileDownload />
         </Button>
