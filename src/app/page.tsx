@@ -77,18 +77,17 @@ export default function CoverLetterGenerator() {
   };
 
   return (
-    <div className=" bg-gray-50 p-4 md:p-12 print:p-0 print:bg-white">
-      <div className="mx-4 p-8 grid grid-cols-1 shadow-md lg:w-full lg:grid-cols-3 gap-8 print:block print:max-w-none">
-        <div className="space-y-6 print:hidden">
-          <div className="space-y-6">
-            <p className="font-bold text-base text-[#25265E]">
-              Fill the details below to generate your cover letter
-            </p>
-            <p className="font-light text-[12px] text-[#25265E80]">
-              Please toggle between personal and business as per your
-              requirement and don’t forgot to stamp if its your business.
-            </p>
-          </div>
+    <div className="bg-gray-50 p-4 md:p-12 print:p-0 print:bg-white">
+      <div className="mx-4 p-8 grid grid-cols-1 lg:w-full lg:grid-cols-5 gap-6 print:block print:max-w-none">
+        <div className="space-y-6 print:hidden col-span-2">
+          <p className="font-bold text-base text-[#25265E]">
+            Fill the details below to generate your cover letter
+          </p>
+          <p className="font-light text-[12px] text-[#25265E80]">
+            Please toggle between personal and business as per your requirement
+            and don’t forgot to stamp if its your business.
+          </p>
+
           <div className=" w-full space-y-2 lg:space-y-4">
             <div className=" space-y-1 lg:space-y-2 ">
               <Label htmlFor="purpose">Purpose</Label>
@@ -256,7 +255,7 @@ export default function CoverLetterGenerator() {
           </div>
         </div>
 
-        <div className="w-full lg:w-full mt-6 mx-3 col-span-2">
+        <div className="w-full mt-6 mx-3 col-span-3">
           <LetterPreview data={formData} isGenerating={isGenerating} />
         </div>
       </div>

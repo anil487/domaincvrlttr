@@ -81,7 +81,7 @@ Address: ${data.address}
       <div>
         <TypeAnimation
           className="text-start lg:text-justify"
-          sequence={[5000, addressContent]}
+          sequence={[4500, addressContent]}
           wrapper="div"
           cursor={false}
           repeat={0}
