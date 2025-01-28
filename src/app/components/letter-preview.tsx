@@ -10,7 +10,7 @@ interface LetterPreviewProps {
 
 export function LetterPreview({ data, isGenerating }: LetterPreviewProps) {
   return (
-    <Print>
+    <Print isGenerating={isGenerating}>
       <div className="bg-white p-3 pt-16 rounded-lg shadow w-full min-h-[842px] print:shadow-none print:p-1 print:min-h-0 print:w-auto print:max-w-none relative overflow-hidden">
         <div className="space-y-3 lg:space-y-6">
           <div className="text-right">
