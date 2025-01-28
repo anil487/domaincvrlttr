@@ -19,8 +19,8 @@ export default function CoverLetterGenerator() {
     purpose: "Personal",
     domainName: "",
     companyName: "",
-    primaryNameServer: "ns101.prabhuhost.com",
-    secondaryNameServer: "ns102.prabhuhost.com",
+    primaryNameServer: "ns1.01cluster.com",
+    secondaryNameServer: "ns2.01cluster.com",
     name: "",
     address: "",
   });
@@ -36,17 +36,34 @@ export default function CoverLetterGenerator() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-      ...(field === "purpose" && value === "Personal"
-        ? { companyName: "" }
-        : {}),
-    }));
-    setErrors((prev) => ({
-      ...prev,
-      [field]: !value,
-    }));
+    if (field === "purpose") {
+      setFormData({
+        purpose: value,
+        domainName: "",
+        companyName: "",
+        primaryNameServer: "ns1.01cluster.com",
+        secondaryNameServer: "ns2.01cluster.com",
+        name: "",
+        address: "",
+      });
+      setErrors({
+        domainName: false,
+        primaryNameServer: false,
+        secondaryNameServer: false,
+        name: false,
+        address: false,
+      });
+      setIsGenerating(false);
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+      setErrors((prev) => ({
+        ...prev,
+        [field]: !value,
+      }));
+    }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -61,8 +78,8 @@ export default function CoverLetterGenerator() {
       purpose: "",
       domainName: "",
       companyName: "",
-      primaryNameServer: "ns101.prabhuhost.com",
-      secondaryNameServer: "ns102.prabhuhost.com",
+      primaryNameServer: "ns1.01cluster.com",
+      secondaryNameServer: "ns2.01cluster.com",
       name: "",
       address: "",
     });
@@ -77,9 +94,9 @@ export default function CoverLetterGenerator() {
   };
 
   return (
-    <div className="bg-gray-50 p-4 md:p-12 print:p-0 print:bg-white">
-      <div className="mx-4 p-8 grid grid-cols-1 lg:w-full lg:grid-cols-5 gap-6 print:block print:max-w-none">
-        <div className="space-y-6 print:hidden col-span-2">
+    <div className="bg-gray-50 p-4 md:p-10 print:p-0 print:bg-white">
+      <div className="max-w-7xl  mx-4 p-6 grid grid-cols-1 lg:w-full lg:grid-cols-5 gap-6 print:block print:max-w-none">
+        <div className="rounded-lg shadow p-3 space-y-6 print:hidden col-span-2">
           <p className="font-bold text-base text-[#25265E]">
             Fill the details below to generate your cover letter
           </p>
@@ -97,8 +114,18 @@ export default function CoverLetterGenerator() {
                 className="w-full"
               >
                 <TabsList className="grid w-full grid-cols-2 mb-6">
-                  <TabsTrigger value="Personal">Personal</TabsTrigger>
-                  <TabsTrigger value="Business">Business</TabsTrigger>
+                  <TabsTrigger
+                    className="hover:bg-blue-500 hover:text-white"
+                    value="Personal"
+                  >
+                    Personal
+                  </TabsTrigger>
+                  <TabsTrigger
+                    className="hover:bg-blue-500 hover:text-white"
+                    value="Business"
+                  >
+                    Business
+                  </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -112,7 +139,7 @@ export default function CoverLetterGenerator() {
                 <Input
                   id="domainName"
                   required
-                  placeholder="E.g.,yourdomainname.com.np"
+                  placeholder="yourdomainname.com.np"
                   value={formData.domainName}
                   onChange={(e) =>
                     handleInputChange("domainName", e.target.value)
@@ -135,7 +162,7 @@ export default function CoverLetterGenerator() {
                 <div className="relative">
                   <Input
                     id="companyName"
-                    placeholder="e.g.,abc Pvt.Ltd. or Govt.Corp."
+                    placeholder="abc Pvt.Ltd. or Govt.Corp."
                     value={formData.companyName}
                     onChange={(e) =>
                       handleInputChange("companyName", e.target.value)
@@ -199,7 +226,7 @@ export default function CoverLetterGenerator() {
                 <Input
                   id="primaryNameServer"
                   required
-                  placeholder="ns101.prabhuhost.com"
+                  placeholder="ns1.01cluster.com"
                   value={formData.primaryNameServer}
                   onChange={(e) =>
                     handleInputChange("primaryNameServer", e.target.value)
@@ -224,7 +251,7 @@ export default function CoverLetterGenerator() {
                 <Input
                   id="secondaryNameServer"
                   required
-                  placeholder="ns102.prabhuhost.com"
+                  placeholder="ns2.01cluster.com"
                   value={formData.secondaryNameServer}
                   onChange={(e) =>
                     handleInputChange("secondaryNameServer", e.target.value)
@@ -240,7 +267,6 @@ export default function CoverLetterGenerator() {
               )}
             </div>
           </div>
-
           <div className="flex gap-8 lg:flex justify-between">
             <Button
               className="h-12 w-30 bg-blue-600 hover:bg-blue-800"
@@ -255,7 +281,7 @@ export default function CoverLetterGenerator() {
           </div>
         </div>
 
-        <div className="w-full mt-6 mx-3 col-span-3">
+        <div className="w-full mx-3 col-span-3">
           <LetterPreview data={formData} isGenerating={isGenerating} />
         </div>
       </div>

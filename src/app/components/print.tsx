@@ -9,19 +9,22 @@ const Print = ({ children }: { children: React.ReactNode }) => {
   const reactToPrintFn = useReactToPrint({ contentRef });
 
   return (
-    <div>
-      <div className="flex justify-end mb-2">
-        <Printer onClick={() => reactToPrintFn()} />
-      </div>
-      <div ref={contentRef}>
-        {children}
-      </div>
-      <div className="flex justify-center mt-4">
-        <Button className="bg-green-500 hover:bg-green-800" onClick={() => reactToPrintFn()} >Download 
-        <MdOutlineFileDownload />
-        </Button>
+    <div className="relative">
+      <div ref={contentRef}>{children}</div>
+
+      <div className="absolute top-10 right-2 z-10 -translate-y-full">
+        <Printer className="cursor-pointer" onClick={() => reactToPrintFn()} />
       </div>
 
+      <div className="absolute right-24 z-20 md:right-60 -translate-y-20 lg:-translate-y-14 lg:right-52 xl:right-80">
+        <Button
+          className="bg-green-500 hover:bg-green-800"
+          onClick={() => reactToPrintFn()}
+        >
+          Download
+          <MdOutlineFileDownload className="animate-bounce" />
+        </Button>
+      </div>
     </div>
   );
 };
