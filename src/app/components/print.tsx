@@ -4,7 +4,13 @@ import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MdOutlineFileDownload } from "react-icons/md";
 
-const Print = ({ children,isGenerating }: { children: React.ReactNode, isGenerating:boolean }) => {
+const Print = ({
+  children,
+  isGenerating,
+}: {
+  children: React.ReactNode;
+  isGenerating: boolean;
+}) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
@@ -12,19 +18,23 @@ const Print = ({ children,isGenerating }: { children: React.ReactNode, isGenerat
     <div className="relative">
       <div ref={contentRef}>{children}</div>
       {isGenerating && (
-      <div className="absolute top-10 right-2 z-10 -translate-y-full">
-        <Printer
-         className="cursor-pointer"  onClick={() => reactToPrintFn()} />
-      </div>
+        <div className="absolute top-10 right-2 z-10 -translate-y-full">
+          <Printer
+            className="cursor-pointer"
+            onClick={() => reactToPrintFn()}
+          />
+        </div>
       )}
-      <div className="absolute right-24 z-20 md:right-60 -translate-y-20 lg:-translate-y-14 lg:right-52 xl:right-80">
+      <div className="absolute -translate-y-20 right-24 z-20  md:-translate-y-16 md:right-60 lg:right-48 xl:right-72">
         <Button
-        disabled={!isGenerating}
+          disabled={!isGenerating}
           className="bg-green-500 hover:bg-green-800"
           onClick={() => reactToPrintFn()}
         >
           Download
-          <MdOutlineFileDownload  className={isGenerating?"animate-bounce":""} />
+          <MdOutlineFileDownload
+            className={isGenerating ? "animate-bounce" : ""}
+          />
         </Button>
       </div>
     </div>

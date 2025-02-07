@@ -68,10 +68,25 @@ export default function CoverLetterGenerator() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    setTimeout(() => {
-      setIsGenerating(true);
-    }, 1500);
+    const newErrors = {
+      domainName: !formData.domainName,
+      companyName: formData.purpose === "Business" && !formData.companyName,
+      name: !formData.name,
+      address: !formData.address,
+      primaryNameServer: !formData.primaryNameServer,
+      secondaryNameServer: !formData.secondaryNameServer,
+    };
+  
+    setErrors(newErrors);
+    const hasErrors = Object.values(newErrors).includes(true);
+  
+    if (!hasErrors) {
+      setTimeout(() => {
+        setIsGenerating(true);
+      }, 1500);
+    }
   };
+
 
   const handleClear = () => {
     setFormData({
