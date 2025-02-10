@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Percent } from "lucide-react";
 import ToolsPage from "../page";
 import TaxTable from "../components/tax_table";
 
@@ -88,15 +89,19 @@ const VatCalculator = () => {
               >
                 VAT %
               </label>
-              <Input
-                id="vatrate"
-                type="number"
-                value={vatrate}
-                onChange={(e) => setVatRate(e.target.value)}
-                placeholder="Enter VAT percentage"
-                className="text-lg"
-            
-              />
+              <div className="relative">
+                <Input
+                  id="vatrate"
+                  type="number"
+                  value={vatrate}
+                  onChange={(e) => setVatRate(e.target.value)}
+                  placeholder="Enter VAT percentage"
+                  className="text-lg pr-10"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <Percent className="h-5 w-5 text-gray-400" />
+                </div>
+              </div>
             </div>
 
             <div>
