@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { BiReset } from "react-icons/bi";
+import { SquareCheck } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -369,6 +370,67 @@ const HostingPlan = () => {
             )}
           </div>
         </section>
+        <div className="bg-slate-50 py-12">
+          <div className="container max-w-4xl mx-auto px-4 space-y-8 ">
+            <section>
+              <h2 className="font-bold text-3xl mb-4 ">
+                What is a Hosting Plan Recommendation System?
+              </h2>
+              <p className="text-gray-700">
+                A Hosting Plan Recommendation System is an intelligent tool
+                designed to suggest the best hosting plan based on user needs,
+                such as website traffic, storage, performance, and budget. It
+                analyzes user requirements and matches them with the most
+                suitable hosting solution, ensuring optimal performance and
+                cost-effectiveness.
+              </p>
+            </section>
+            <section>
+              <h2 className="font-bold text-3xl mb-4">
+                Types of Hosting Plans
+              </h2>
+              <ul className="space-y-2">
+                {uniquePlans.map((plan, index) => (
+                  <li className="flex items-start gap-5" key={index}>
+                    <SquareCheck className="text-violet-500" />
+                    <span>{plan}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <section>
+              <h2 className="font-bold text-3xl mb-4">
+                Importance of Hosting Plan Recommendation System
+              </h2>
+              <ul className="list-disc list-inside text-gray-700 space-y-2">
+                <li>
+                  <strong> Performance Optimized </strong> – Ensures websites
+                  get the right amount of resources (CPU, RAM, bandwidth).
+                </li>
+                <li>
+                  {" "}
+                  <strong>Cost Efficiency</strong> – Helps users avoid
+                  overpaying for unnecessary features.
+                </li>
+                <li>
+                  {" "}
+                  <strong>User-Friendly</strong> – Simplifies decision-making
+                  for beginners and businesses.
+                </li>
+                <li>
+                  {" "}
+                  <strong>Scalability</strong> – Recommends plans that support
+                  future growth.
+                </li>
+                <li>
+                  {" "}
+                  <strong>Better Security</strong> – Suggests hosting with
+                  necessary security features based on the type of website.
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
       </ToolsPage>
     </>
   );
